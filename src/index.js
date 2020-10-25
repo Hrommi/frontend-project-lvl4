@@ -10,9 +10,12 @@ import gon from 'gon';
 // import cookies from 'js-cookie';
 // import io from 'socket.io-client';
 
+import run from './init';
+
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-console.log('it works!');
-console.log('gon', gon);
+const { channels } = gon;
+
+run(channels);
