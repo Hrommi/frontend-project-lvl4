@@ -14,15 +14,15 @@ const messagesSlice = createSlice({
   },
 });
 
-const CHANNEL_ID = 1;
-
 const createLengthEqualSelector = createSelectorCreator(
   defaultMemoize,
   (a, b) => a.length === b.length,
 );
 
-const getMessages = (state) => state.messages.filter((message) => message.channelId === CHANNEL_ID);
-const getCurrentChannelId = () => CHANNEL_ID;
+const getMessages = (state) => state.messages.filter((message) => (
+  message.channelId === state.currentChannelId
+));
+const getCurrentChannelId = (state) => state.currentChannelId;
 export const selectMessagesByCurrentChannel = createLengthEqualSelector(
   [getMessages, getCurrentChannelId],
   (messages, currentChannelId) => (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -8,9 +9,7 @@ import routes from '../../routes';
 import { useUser } from '../../contexts/UserContext';
 import { useToast } from '../../components/Toast';
 
-const CHANNEL_ID = 1;
-
-const AddMessage = () => {
+const AddMessage = ({ currentChannelId }) => {
   const { nickname } = useUser();
   const { showToast, hideToast } = useToast();
 
@@ -39,7 +38,7 @@ const AddMessage = () => {
         },
       };
       try {
-        await axios.post(routes.channelMessagesPath(CHANNEL_ID), data);
+        await axios.post(routes.channelMessagesPath(currentChannelId), data);
         resetForm();
         focusBodyInput();
       } catch (error) {
@@ -73,4 +72,8 @@ const AddMessage = () => {
   );
 };
 
-export default AddMessage;
+const mapStateToProps = (state) => ({
+  currentChannelId: state.currentChannelId,
+});
+
+export default connect(mapStateToProps)(AddMessage);
