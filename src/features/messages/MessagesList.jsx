@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectMessagesByCurrentChannel } from './messagesSlice';
+import { selectMessages } from './messagesSlice';
 
 const renderMessage = (message) => (
   <div key={message.id}>
@@ -36,7 +36,7 @@ const MessagesList = ({ messages }) => {
 };
 
 const mapStateToProps = (state) => ({
-  messages: selectMessagesByCurrentChannel(state),
+  messages: selectMessages(state),
 });
 
 export default connect(mapStateToProps)(MessagesList);

@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import last from 'lodash/last';
+import isEqual from 'lodash/isEqual';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { createSelectorCreator, defaultMemoize } from '@reduxjs/toolkit/node_modules/reselect';
 
 const messagesSlice = createSlice({
@@ -14,20 +16,22 @@ const messagesSlice = createSlice({
   },
 });
 
-const createLengthEqualSelector = createSelectorCreator(
+const createLastItemEqualSelector = createSelectorCreator(
   defaultMemoize,
-  (a, b) => a.length === b.length,
+  (a, b) => isEqual(last(a), last(b)),
 );
 
-const getMessages = (state) => state.messages.filter((message) => (
-  message.channelId === state.currentChannelId
-));
 const getCurrentChannelId = (state) => state.currentChannelId;
-export const selectMessagesByCurrentChannel = createLengthEqualSelector(
-  [getMessages, getCurrentChannelId],
-  (messages, currentChannelId) => (
+const getMessages = (state) => state.messages;
+const selectMessagesByCurrentChannelId = createSelector(
+  [getCurrentChannelId, getMessages],
+  (currentChannelId, messages) => (
     messages.filter(({ channelId }) => channelId === currentChannelId)
   ),
+);
+export const selectMessages = createLastItemEqualSelector(
+  [selectMessagesByCurrentChannelId],
+  (messages) => messages,
 );
 
 export const { setMessages, addMessage } = messagesSlice.actions;
