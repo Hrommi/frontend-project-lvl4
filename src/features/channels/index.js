@@ -1,3 +1,2 @@
-import Channels from './Channels';
-
-export { Channels as default };
+export { default } from './Channels';
+export * from './channelsSlice';

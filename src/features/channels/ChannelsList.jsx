@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const renderChannel = (channel) => (
   <li className="nav-item mb-2" key={channel.id}>
@@ -18,4 +19,8 @@ const ChannelsList = ({ channels }) => {
   );
 };
 
-export default ChannelsList;
+const mapStateToProps = (state) => ({
+  channels: state.channels,
+});
+
+export default connect(mapStateToProps)(ChannelsList);

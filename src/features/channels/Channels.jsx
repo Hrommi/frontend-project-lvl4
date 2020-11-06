@@ -1,8 +1,8 @@
 import React from 'react';
 import ChannelsList from './ChannelsList';
 
-const Channels = ({ channels }) => (
-  <ChannelsList channels={channels} />
+const Channels = () => (
+  <ChannelsList />
 );
 
 export default Channels;

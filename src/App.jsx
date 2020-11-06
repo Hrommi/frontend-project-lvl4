@@ -4,10 +4,10 @@ import Col from 'react-bootstrap/Col';
 import Channels from './features/channels';
 import Messages from './features/messages';
 
-const App = ({ channels }) => (
+const App = () => (
   <Row className="h-100 pb-3">
     <Col xs="3" className="border-right">
-      <Channels channels={channels} />
+      <Channels />
     </Col>
     <Col className="h-100">
       <Messages />
