@@ -1,10 +1,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import http from '../../api';
 import routes from '../../routes';
 import { useUser } from '../../contexts/UserContext';
 import { useToast } from '../../components/Toast';
@@ -38,7 +38,7 @@ const AddMessage = ({ currentChannelId }) => {
         },
       };
       try {
-        await axios.post(routes.channelMessagesPath(currentChannelId), data);
+        await http.post(routes.channelMessagesPath(currentChannelId), data);
         resetForm();
         focusBodyInput();
       } catch (error) {
