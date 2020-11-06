@@ -13,7 +13,7 @@ const renderMessage = (message) => (
   </div>
 );
 
-const Messages = ({ messages }) => {
+const MessagesList = ({ messages }) => {
   const container = React.useRef(null);
 
   const scrollToBottom = () => {
@@ -39,4 +39,4 @@ const mapStateToProps = (state) => ({
   messages: selectMessagesByCurrentChannel(state),
 });
 
-export default connect(mapStateToProps)(Messages);
+export default connect(mapStateToProps)(MessagesList);
