@@ -7,6 +7,7 @@ import App from './App';
 import store from './store';
 import { setChannels, setCurrentChannelId } from './features/channels';
 import { setMessages, addMessage } from './features/messages';
+import { ModalProvider } from './components/Modal';
 import { ToastProvider } from './components/Toast';
 
 export default ({ channels, currentChannelId, messages }) => {
@@ -15,19 +16,20 @@ export default ({ channels, currentChannelId, messages }) => {
   store.dispatch(setChannels({ channels }));
   store.dispatch(setCurrentChannelId({ channelId: currentChannelId }));
   store.dispatch(setMessages({ messages }));
-
   socket.on('newMessage', ({ data }) => {
     store.dispatch(addMessage({ message: data.attributes }));
   });
 
   render(
-    <UserProvider>
-      <ToastProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </ToastProvider>
-    </UserProvider>,
+    <Provider store={store}>
+      <UserProvider>
+        <ToastProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </ToastProvider>
+      </UserProvider>
+    </Provider>,
     document.getElementById('chat'),
   );
 };
