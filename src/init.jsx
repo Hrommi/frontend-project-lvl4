@@ -5,7 +5,13 @@ import io from 'socket.io-client';
 import UserProvider from './contexts/UserContext';
 import App from './App';
 import store from './store';
-import { setChannels, setCurrentChannelId } from './features/channels';
+import {
+  setChannels,
+  addChannel,
+  removeChannel,
+  renameChannel,
+  setCurrentChannelId,
+} from './features/channels';
 import { setMessages, addMessage } from './features/messages';
 import { ModalProvider } from './components/Modal';
 import { ToastProvider } from './components/Toast';
@@ -16,6 +22,16 @@ export default ({ channels, currentChannelId, messages }) => {
   store.dispatch(setChannels({ channels }));
   store.dispatch(setCurrentChannelId({ channelId: currentChannelId }));
   store.dispatch(setMessages({ messages }));
+
+  socket.on('newChannel', ({ data }) => {
+    store.dispatch(addChannel({ channel: data.attributes }));
+  });
+  socket.on('removeChannel', ({ data }) => {
+    store.dispatch(removeChannel({ channelId: data.id }));
+  });
+  socket.on('renameChannel', ({ data }) => {
+    store.dispatch(renameChannel({ channelId: data.id, channelName: data.attributes.name }));
+  });
   socket.on('newMessage', ({ data }) => {
     store.dispatch(addMessage({ message: data.attributes }));
   });
