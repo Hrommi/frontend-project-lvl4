@@ -12,6 +12,7 @@ const Toast = ({
     onClose={onHide}
     style={{
       position: 'fixed',
+      zIndex: '1100',
       right: 10,
       bottom: 10,
       width: 180,
