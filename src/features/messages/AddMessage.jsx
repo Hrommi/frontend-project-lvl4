@@ -60,6 +60,7 @@ const AddMessage = ({ currentChannelId }) => {
             value={formik.values.body}
             onChange={formik.handleChange}
             ref={bodyInput}
+            readOnly={formik.isSubmitting}
           />
         </Col>
         <Col xs="auto">
