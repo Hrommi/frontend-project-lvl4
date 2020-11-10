@@ -2,6 +2,7 @@ import last from 'lodash/last';
 import isEqual from 'lodash/isEqual';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { createSelectorCreator, defaultMemoize } from '@reduxjs/toolkit/node_modules/reselect';
+import { removeChannel } from '../channels';
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -10,6 +11,11 @@ const messagesSlice = createSlice({
     addMessage(state, action) {
       state.push(action.payload.message);
     },
+  },
+  extraReducers: {
+    [removeChannel]: (state, action) => (
+      state.filter((message) => message.channelId !== action.payload.channelId)
+    ),
   },
 });
 
