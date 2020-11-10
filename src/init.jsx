@@ -4,24 +4,20 @@ import { Provider } from 'react-redux';
 import io from 'socket.io-client';
 import UserProvider from './contexts/UserContext';
 import App from './App';
-import store from './store';
-import {
-  setChannels,
-  addChannel,
-  removeChannel,
-  renameChannel,
-  setCurrentChannelId,
-} from './features/channels';
-import { setMessages, addMessage } from './features/messages';
+import getStore from './store';
+import { addChannel, removeChannel, renameChannel } from './features/channels';
+import { addMessage } from './features/messages';
 import { ModalProvider } from './components/Modal';
 import { ToastProvider } from './components/Toast';
 
 export default ({ channels, currentChannelId, messages }) => {
+  const preloadedState = {
+    channels,
+    currentChannelId,
+    messages,
+  };
+  const store = getStore(preloadedState);
   const socket = io();
-
-  store.dispatch(setChannels({ channels }));
-  store.dispatch(setCurrentChannelId({ channelId: currentChannelId }));
-  store.dispatch(setMessages({ messages }));
 
   socket.on('newChannel', ({ data }) => {
     store.dispatch(addChannel({ channel: data.attributes }));

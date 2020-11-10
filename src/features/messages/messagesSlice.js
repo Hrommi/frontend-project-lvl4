@@ -7,9 +7,6 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState: [],
   reducers: {
-    setMessages(state, action) {
-      return action.payload.messages;
-    },
     addMessage(state, action) {
       state.push(action.payload.message);
     },
@@ -34,6 +31,6 @@ export const selectMessages = createLastItemEqualSelector(
   (messages) => messages,
 );
 
-export const { setMessages, addMessage } = messagesSlice.actions;
+export const { addMessage } = messagesSlice.actions;
 
 export const messagesReducer = messagesSlice.reducer;
