@@ -25,20 +25,20 @@ const AddMessage = ({ currentChannelId }) => {
     onSubmit: async ({ body }, { resetForm }) => {
       hideToast();
 
-      if (body.trim() === '') {
+      const trimmedBody = body.trim();
+
+      if (trimmedBody === '') {
         return;
       }
 
       const data = {
-        data: {
-          attributes: {
-            body,
-            nickname,
-          },
+        attributes: {
+          body: trimmedBody,
+          nickname,
         },
       };
       try {
-        await http.post(routes.channelMessagesPath(currentChannelId), data);
+        await http.post(routes.channelMessagesPath(currentChannelId), { data });
         resetForm();
         focusBodyInput();
       } catch (error) {

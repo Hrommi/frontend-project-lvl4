@@ -26,14 +26,12 @@ const RenameChannel = ({ channel, cancelCallback, channelNames }) => {
       hideToast();
 
       const data = {
-        data: {
-          attributes: {
-            name: name.trim(),
-          },
+        attributes: {
+          name: name.trim(),
         },
       };
       try {
-        await http.patch(routes.channelPath(channel.id), data);
+        await http.patch(routes.channelPath(channel.id), { data });
         resetForm();
         cancelCallback();
       } catch (error) {

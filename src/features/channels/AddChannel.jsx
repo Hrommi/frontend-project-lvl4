@@ -26,14 +26,12 @@ const AddChannel = ({ cancelCallback, channelNames }) => {
       hideToast();
 
       const data = {
-        data: {
-          attributes: {
-            name: name.trim(),
-          },
+        attributes: {
+          name: name.trim(),
         },
       };
       try {
-        await http.post(routes.channelsPath(), data);
+        await http.post(routes.channelsPath(), { data });
         resetForm();
         cancelCallback();
       } catch (error) {
