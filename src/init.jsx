@@ -9,12 +9,7 @@ import { addMessage } from './features/messages';
 import { ModalProvider } from './components/Modal';
 import { ToastProvider } from './components/Toast';
 
-export default ({ channels, currentChannelId, messages }, socket) => {
-  const preloadedState = {
-    channels,
-    currentChannelId,
-    messages,
-  };
+export default (preloadedState, socket) => {
   const store = getStore(preloadedState);
 
   socket.on('newChannel', ({ data }) => {
