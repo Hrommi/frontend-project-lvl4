@@ -3,6 +3,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import gon from 'gon';
+import io from 'socket.io-client';
 
 import '../assets/application.scss';
 
@@ -12,4 +13,6 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-run(gon);
+const socket = io();
+
+run(gon, socket);
