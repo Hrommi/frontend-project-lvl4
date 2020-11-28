@@ -3,7 +3,6 @@ import {
   addChannel,
   removeChannel,
   renameChannel,
-  selectChannelNames,
 } from './channelsSlice';
 
 const channelId1 = 1;
@@ -82,16 +81,5 @@ describe('channelsReducer', () => {
       },
     );
     expect(state).toEqual([{ id: channelId1, name: newName }, channel2]);
-  });
-});
-
-describe('selectChannelNames', () => {
-  beforeEach(() => {
-    selectChannelNames.resetRecomputations();
-  });
-
-  it('should return channels with the correct channelId', () => {
-    const state = { channels: [...channels] };
-    expect(selectChannelNames(state)).toEqual(['first channel', 'second channel']);
   });
 });

@@ -8,7 +8,7 @@ import http from '../../api';
 import routes from '../../routes';
 import { useToast } from '../../components/Toast';
 import getSchema from './schema';
-import { selectChannelNames } from './channelsSlice';
+import selectChannelNames from './selectors';
 
 const AddChannel = ({ cancelCallback, channelNames }) => {
   const { t } = useTranslation('form');

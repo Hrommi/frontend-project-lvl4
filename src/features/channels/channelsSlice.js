@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -24,11 +24,5 @@ export const {
   removeChannel,
   renameChannel,
 } = channelsSlice.actions;
-
-const getChannels = (state) => state.channels;
-export const selectChannelNames = createSelector(
-  [getChannels],
-  (channels) => channels.map((channel) => channel.name),
-);
 
 export const channelsReducer = channelsSlice.reducer;
