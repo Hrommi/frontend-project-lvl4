@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -10,6 +11,7 @@ import { useUser } from '../../contexts/UserContext';
 import { useToast } from '../../components/Toast';
 
 const AddMessage = ({ currentChannelId }) => {
+  const { t } = useTranslation('form');
   const { nickname } = useUser();
   const { showToast, hideToast } = useToast();
 
@@ -65,7 +67,7 @@ const AddMessage = ({ currentChannelId }) => {
         </Col>
         <Col xs="auto">
           <Button type="submit" disabled={formik.isSubmitting}>
-            Submit
+            {t('submit')}
           </Button>
         </Col>
       </Form.Row>

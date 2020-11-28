@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -25,6 +26,7 @@ const renderButton = ({ channel, setCurrentChannelId, buttonVariant }) => {
 };
 
 const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
+  const { t } = useTranslation('channels');
   const { showModal, hideModal } = useModal();
 
   const buttonVariant = isCurrent ? 'primary' : 'light';
@@ -38,19 +40,19 @@ const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
           <Dropdown.Menu alignRight>
             <Dropdown.Item
               onClick={() => showModal({
-                title: 'Rename channel',
+                title: t('rename'),
                 body: <RenameChannel channel={channel} cancelCallback={hideModal} />,
               })}
             >
-              Rename
+              {t('renameAction')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => showModal({
-                title: 'Remove channel',
+                title: t('remove'),
                 body: <RemoveChannel channel={channel} cancelCallback={hideModal} />,
               })}
             >
-              Remove
+              {t('removeAction')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

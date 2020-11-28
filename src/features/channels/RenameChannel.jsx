@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import http from '../../api';
@@ -10,6 +11,7 @@ import getSchema from './schema';
 import { selectChannelNames } from './channelsSlice';
 
 const RenameChannel = ({ channel, cancelCallback, channelNames }) => {
+  const { t } = useTranslation('form');
   const { showToast, hideToast } = useToast();
 
   const nameInput = React.useRef(null);
@@ -66,14 +68,14 @@ const RenameChannel = ({ channel, cancelCallback, channelNames }) => {
           onClick={cancelCallback}
           disabled={formik.isSubmitting}
         >
-          Cancel
+          {t('cancel')}
         </Button>
         <Button
           className="ml-2"
           type="submit"
           disabled={formik.isSubmitting}
         >
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </Form>
