@@ -1,5 +1,5 @@
 import React from 'react';
-import BootstrapModal from 'react-bootstrap/modal';
+import BootstrapModal from 'react-bootstrap/Modal';
 
 const Modal = ({
   title,
