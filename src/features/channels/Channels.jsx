@@ -7,7 +7,11 @@ import { useModal } from '../../components/Modal';
 
 const Channels = () => {
   const { t } = useTranslation('channels');
-  const { showModal, hideModal } = useModal();
+  const { showModal, hideModal } = useModal({
+    type: 'ADD_CHANNEL',
+    title: t('add'),
+    component: AddChannel,
+  });
 
   return (
     <>
@@ -18,10 +22,7 @@ const Channels = () => {
           type="button"
           className="ml-auto"
           variant="light"
-          onClick={() => showModal({
-            title: t('add'),
-            body: <AddChannel cancelCallback={hideModal} />,
-          })}
+          onClick={() => showModal({ cancelCallback: hideModal })}
         >
           +
         </Button>

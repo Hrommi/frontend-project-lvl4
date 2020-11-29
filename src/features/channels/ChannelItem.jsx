@@ -27,7 +27,16 @@ const renderButton = ({ channel, setCurrentChannelId, buttonVariant }) => {
 
 const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
   const { t } = useTranslation('channels');
-  const { showModal, hideModal } = useModal();
+  const { showModal: showModalRenameChannel, hideModal: hideModalRenameChannel } = useModal({
+    type: 'RENAME_CHANNEL',
+    title: t('rename'),
+    component: RenameChannel,
+  });
+  const { showModal: showModalRemoveChannel, hideModal: hideModalRemoveChannel } = useModal({
+    type: 'REMOVE_CHANNEL',
+    title: t('remove'),
+    component: RemoveChannel,
+  });
 
   const buttonVariant = isCurrent ? 'primary' : 'light';
 
@@ -39,17 +48,17 @@ const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
           <Dropdown.Toggle split variant={buttonVariant} />
           <Dropdown.Menu alignRight>
             <Dropdown.Item
-              onClick={() => showModal({
-                title: t('rename'),
-                body: <RenameChannel channel={channel} cancelCallback={hideModal} />,
+              onClick={() => showModalRenameChannel({
+                channel,
+                cancelCallback: hideModalRenameChannel,
               })}
             >
               {t('renameAction')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => showModal({
-                title: t('remove'),
-                body: <RemoveChannel channel={channel} cancelCallback={hideModal} />,
+              onClick={() => showModalRemoveChannel({
+                channel,
+                cancelCallback: hideModalRemoveChannel,
               })}
             >
               {t('removeAction')}
