@@ -1,5 +1,6 @@
 // @ts-check
 
+import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -22,6 +23,10 @@ module.exports = {
     compress: true,
   },
   plugins: [
+    new Dotenv({
+      silent: true,
+      systemvars: true,
+    }),
     new MiniCssExtractPlugin(),
   ],
   module: {
