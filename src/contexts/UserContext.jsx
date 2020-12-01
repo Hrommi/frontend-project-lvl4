@@ -4,9 +4,7 @@ import faker from 'faker';
 
 const NICKNAME_COOCKIE = 'nickname';
 
-const UserContext = React.createContext({
-  nickname: null,
-});
+const UserContext = React.createContext();
 
 const UserProvider = ({ children }) => {
   const nickname = cookies.get(NICKNAME_COOCKIE) || faker.internet.userName();
