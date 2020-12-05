@@ -5,7 +5,7 @@ import Modal from './Modal';
 
 const renderBody = ({ modals, type, props }) => {
   if (!modals.has(type)) {
-    return null;
+    throw new Error(`Unknown modal type '${type}'`);
   }
   const Component = modals.get(type);
   // eslint-disable-next-line react/jsx-props-no-spreading
