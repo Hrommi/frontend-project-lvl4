@@ -75,7 +75,7 @@ describe('channelsReducer', () => {
     const state = channelsReducer(
       {
         channels,
-        currentChannelId: null,
+        currentChannelId: channelId1,
       },
       {
         type: removeChannel.type,
@@ -86,7 +86,7 @@ describe('channelsReducer', () => {
     );
     const expected = {
       channels: [channel2],
-      currentChannelId: null,
+      currentChannelId: channelId2,
     };
     expect(state).toEqual(expected);
   });
