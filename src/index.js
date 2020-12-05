@@ -6,6 +6,7 @@ import gon from 'gon';
 import io from 'socket.io-client';
 import Rollbar from 'rollbar';
 import '../assets/application.scss';
+import './i18n';
 import run from './init';
 
 // eslint-disable-next-line no-new

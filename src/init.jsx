@@ -8,7 +8,6 @@ import { addChannel, removeChannel, renameChannel } from './features/channels';
 import { addMessage } from './features/messages';
 import { ModalProvider, createModals } from './components/Modal';
 import { ToastProvider } from './components/Toast';
-import './i18n';
 
 export default ({ channels, currentChannelId, messages }, socket) => {
   const preloadedState = {
