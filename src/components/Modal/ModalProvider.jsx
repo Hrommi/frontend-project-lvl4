@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ModalContext from './ModalContext';
 import Modal from './Modal';
 
-const renderBody = ({ modals, type, props }) => {
+const Body = ({ modals, type, props }) => {
   if (!modals.has(type)) {
     throw new Error(`Unknown modal type '${type}'`);
   }
@@ -45,11 +45,7 @@ const ModalProvider = ({ modals, children }) => {
       {ReactDOM.createPortal(
         <Modal
           title={modalInfo.title}
-          body={renderBody({
-            modals,
-            type: modalInfo.type,
-            props: modalInfo.props,
-          })}
+          body={<Body modals={modals} type={modalInfo.type} props={modalInfo.props} />}
           isVisible={modalInfo.isVisible}
           onHide={hideModal}
         />,
