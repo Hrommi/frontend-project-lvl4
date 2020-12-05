@@ -12,9 +12,9 @@ const RemoveChannel = ({ channel, cancelCallback }) => {
   const { showToast, hideToast } = useToast();
 
   const confirmButton = React.useRef(null);
-  const focusConfirmButton = () => {
+  React.useEffect(() => {
     confirmButton.current.focus();
-  };
+  }, []);
 
   const formik = useFormik({
     initialValues: {},
@@ -29,10 +29,6 @@ const RemoveChannel = ({ channel, cancelCallback }) => {
       }
     },
   });
-
-  React.useEffect(() => {
-    focusConfirmButton();
-  }, []);
 
   return (
     <Form onSubmit={formik.handleSubmit}>

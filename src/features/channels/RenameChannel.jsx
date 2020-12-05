@@ -15,9 +15,9 @@ const RenameChannel = ({ channel, cancelCallback, channelNames }) => {
   const { showToast, hideToast } = useToast();
 
   const nameInput = React.useRef(null);
-  const focusNameInput = () => {
+  React.useEffect(() => {
     nameInput.current.select();
-  };
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -42,9 +42,7 @@ const RenameChannel = ({ channel, cancelCallback, channelNames }) => {
     },
   });
 
-  React.useEffect(() => {
-    focusNameInput();
-  }, []);
+
 
   return (
     <Form onSubmit={formik.handleSubmit}>
