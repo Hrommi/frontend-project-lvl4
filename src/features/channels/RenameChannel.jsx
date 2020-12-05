@@ -42,8 +42,6 @@ const RenameChannel = ({ channel, cancelCallback, channelNames }) => {
     },
   });
 
-
-
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
