@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import selectMessages from './selectors';
 
 const renderMessage = (message) => (
-  <div key={message.id}>
+  <div key={message.id} className="text-break">
     <strong>
       {message.nickname}
     </strong>
