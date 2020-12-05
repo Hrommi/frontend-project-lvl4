@@ -8,7 +8,7 @@ import { useModal } from '../../components/Modal';
 import RenameChannel from './RenameChannel';
 import RemoveChannel from './RemoveChannel';
 
-const renderButton = ({ channel, setCurrentChannelId, buttonVariant }) => {
+const ChannelButton = ({ channel, setCurrentChannelId, buttonVariant }) => {
   const buttonClasses = cn('nav-link text-left', {
     'flex-grow-1': channel.removable,
   });
@@ -44,7 +44,11 @@ const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
     <li className="nav-item mb-2">
       {channel.removable ? (
         <Dropdown className="d-flex" as={ButtonGroup}>
-          {renderButton({ channel, setCurrentChannelId, buttonVariant })}
+          <ChannelButton
+            channel={channel}
+            setCurrentChannelId={setCurrentChannelId}
+            buttonVariant={buttonVariant}
+          />
           <Dropdown.Toggle split variant={buttonVariant} />
           <Dropdown.Menu alignRight>
             <Dropdown.Item
@@ -65,7 +69,13 @@ const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      ) : renderButton({ channel, setCurrentChannelId, buttonVariant })}
+      ) : (
+        <ChannelButton
+          channel={channel}
+          setCurrentChannelId={setCurrentChannelId}
+          buttonVariant={buttonVariant}
+        />
+      )}
     </li>
   );
 };
