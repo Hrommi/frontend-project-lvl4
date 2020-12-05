@@ -21,8 +21,8 @@ describe('selectChannelNames', () => {
     selectChannelNames.resetRecomputations();
   });
 
-  it('should return channels with the correct channelId', () => {
-    const state = { channels: [...channels] };
+  it('should return channels names', () => {
+    const state = { channelsInfo: { channels: [...channels] } };
     expect(selectChannelNames(state)).toEqual(['first channel', 'second channel']);
   });
 });

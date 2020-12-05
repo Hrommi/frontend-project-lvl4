@@ -8,7 +8,7 @@ const createLastItemEqualSelector = createSelectorCreator(
   (a, b) => isEqual(last(a), last(b)),
 );
 
-const getCurrentChannelId = (state) => state.currentChannelId;
+const getCurrentChannelId = (state) => state.channelsInfo.currentChannelId;
 const getMessages = (state) => state.messages;
 const selectMessagesByCurrentChannelId = createSelector(
   [getCurrentChannelId, getMessages],

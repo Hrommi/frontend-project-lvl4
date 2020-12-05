@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ChannelItem from './ChannelItem';
-import { setCurrentChannelId as setCurrentChannelIdConnect } from './currentChannelIdSlice';
+import { setCurrentChannelId as setCurrentChannelIdConnect } from './channelsInfoSlice';
 
 const ChannelsList = ({ channels, currentChannelId, setCurrentChannelId }) => {
   if (channels.length === 0) {
@@ -23,8 +23,8 @@ const ChannelsList = ({ channels, currentChannelId, setCurrentChannelId }) => {
 };
 
 const mapStateToProps = (state) => ({
-  channels: state.channels,
-  currentChannelId: state.currentChannelId,
+  channels: state.channelsInfo.channels,
+  currentChannelId: state.channelsInfo.currentChannelId,
 });
 
 const mapDispatchToProps = {

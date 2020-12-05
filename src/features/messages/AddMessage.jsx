@@ -76,7 +76,7 @@ const AddMessage = ({ currentChannelId }) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentChannelId: state.currentChannelId,
+  currentChannelId: state.channelsInfo.currentChannelId,
 });
 
 export default connect(mapStateToProps)(AddMessage);

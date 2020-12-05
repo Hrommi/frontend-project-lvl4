@@ -33,26 +33,26 @@ describe('selectMessages', () => {
   });
 
   it('should return messages with the correct channelId', () => {
-    const state = { currentChannelId: channelId1, messages: [...messages] };
+    const state = { channelsInfo: { currentChannelId: channelId1 }, messages: [...messages] };
     expect(selectMessages(state)).toEqual([message1, message2]);
   });
 
   it('should be recomputation when adding a new message with the current currentChannelId', () => {
-    const state1 = { currentChannelId: channelId1, messages: [] };
+    const state1 = { channelsInfo: { currentChannelId: channelId1 }, messages: [] };
     expect(selectMessages(state1)).toHaveLength(0);
     expect(selectMessages.recomputations()).toBe(1);
 
-    const state2 = { currentChannelId: channelId1, messages: [message1] };
+    const state2 = { channelsInfo: { currentChannelId: channelId1 }, messages: [message1] };
     expect(selectMessages(state2)).toHaveLength(1);
     expect(selectMessages.recomputations()).toBe(2);
   });
 
   it('should not be recomputation when adding a new message with the other currentChannelId', () => {
-    const state1 = { currentChannelId: channelId1, messages: [] };
+    const state1 = { channelsInfo: { currentChannelId: channelId1 }, messages: [] };
     expect(selectMessages(state1)).toHaveLength(0);
     expect(selectMessages.recomputations()).toBe(1);
 
-    const state2 = { currentChannelId: channelId1, messages: [message3] };
+    const state2 = { channelsInfo: { currentChannelId: channelId1 }, messages: [message3] };
     expect(selectMessages(state2)).toHaveLength(0);
     expect(selectMessages.recomputations()).toBe(1);
   });
