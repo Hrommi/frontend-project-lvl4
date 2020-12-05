@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import selectMessages from './selectors';
 
-const renderMessage = (message) => (
-  <div key={message.id} className="text-break">
+const Message = ({ nickname, body }) => (
+  <div className="text-break">
     <strong>
-      {message.nickname}
+      {nickname}
     </strong>
     :
     {' '}
-    {message.body}
+    {body}
   </div>
 );
 
@@ -30,7 +30,9 @@ const MessagesList = ({ messages }) => {
       className="overflow-auto mb-3"
       ref={container}
     >
-      {messages.map(renderMessage)}
+      {messages.map(({ id, nickname, body }) => (
+        <Message key={id} nickname={nickname} body={body} />
+      ))}
     </div>
   );
 };
