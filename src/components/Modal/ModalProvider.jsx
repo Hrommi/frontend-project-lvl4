@@ -13,11 +13,11 @@ const renderBody = ({ modals, type, props }) => {
 };
 
 const ModalProvider = ({ modals, children }) => {
-  const addModal = React.useCallback(({ type, component }) => {
+  const addModal = ({ type, component }) => {
     if (!modals.has(type)) {
       modals.add(type, component);
     }
-  }, []);
+  };
 
   const [modalInfo, setModalInfo] = React.useState({
     title: null,
@@ -26,18 +26,18 @@ const ModalProvider = ({ modals, children }) => {
     isVisible: false,
   });
 
-  const showModal = React.useCallback(({ type, title, props }) => {
+  const showModal = ({ type, title, props }) => {
     setModalInfo({
       type,
       title,
       props,
       isVisible: true,
     });
-  }, []);
+  };
 
-  const hideModal = React.useCallback(() => {
+  const hideModal = () => {
     setModalInfo((prevModalInfo) => ({ ...prevModalInfo, isVisible: false }));
-  }, []);
+  };
 
   return (
     <ModalContext.Provider value={{ addModal, showModal, hideModal }}>
