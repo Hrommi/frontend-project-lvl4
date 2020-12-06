@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -16,43 +16,44 @@ const RemoveChannel = ({ channel, cancelCallback }) => {
     confirmButton.current.focus();
   }, []);
 
-  const formik = useFormik({
-    initialValues: {},
-    onSubmit: async () => {
-      hideToast();
-
-      try {
-        await http.delete(routes.channelPath(channel.id));
-        cancelCallback();
-      } catch (error) {
-        showToast({ title: t('form:error'), body: error.message });
-      }
-    },
-  });
-
   return (
-    <Form onSubmit={formik.handleSubmit}>
-      <p>{t('areYouSure')}</p>
-      <div className="d-flex justify-content-end">
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={cancelCallback}
-          disabled={formik.isSubmitting}
-        >
-          {t('form:cancel')}
-        </Button>
-        <Button
-          className="ml-2"
-          type="submit"
-          variant="danger"
-          disabled={formik.isSubmitting}
-          ref={confirmButton}
-        >
-          {t('form:confirm')}
-        </Button>
-      </div>
-    </Form>
+    <Formik
+      initialValues={{}}
+      onSubmit={async () => {
+        hideToast();
+        try {
+          await http.delete(routes.channelPath(channel.id));
+          cancelCallback();
+        } catch (error) {
+          showToast({ title: t('form:error'), body: error.message });
+        }
+      }}
+    >
+      {(formik) => (
+        <Form onSubmit={formik.handleSubmit}>
+          <p>{t('areYouSure')}</p>
+          <div className="d-flex justify-content-end">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={cancelCallback}
+              disabled={formik.isSubmitting}
+            >
+              {t('form:cancel')}
+            </Button>
+            <Button
+              className="ml-2"
+              type="submit"
+              variant="danger"
+              disabled={formik.isSubmitting}
+              ref={confirmButton}
+            >
+              {t('form:confirm')}
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
