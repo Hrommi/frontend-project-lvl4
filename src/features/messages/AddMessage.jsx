@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import http from '../../api';
+import axios from 'axios';
 import routes from '../../routes';
 import { useUser } from '../../contexts/UserContext';
 import { useToast } from '../../components/Toast';
@@ -41,7 +41,7 @@ const AddMessage = ({ currentChannelId }) => {
           },
         };
         try {
-          await http.post(routes.channelMessagesPath(currentChannelId), { data });
+          await axios.post(routes.channelMessagesPath(currentChannelId), { data });
           resetForm();
           focusBodyInput();
         } catch (error) {

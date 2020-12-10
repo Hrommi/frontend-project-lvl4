@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import http from '../../api';
+import axios from 'axios';
 import routes from '../../routes';
 import { useToast } from '../../components/Toast';
 
@@ -22,7 +22,7 @@ const RemoveChannel = ({ channel, cancelCallback }) => {
       onSubmit={async () => {
         hideToast();
         try {
-          await http.delete(routes.channelPath(channel.id));
+          await axios.delete(routes.channelPath(channel.id));
           cancelCallback();
         } catch (error) {
           showToast({ title: t('form:error'), body: error.message });

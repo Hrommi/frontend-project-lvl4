@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import http from '../../api';
+import axios from 'axios';
 import routes from '../../routes';
 import { useToast } from '../../components/Toast';
 import Input from '../../components/Input';
@@ -32,7 +32,7 @@ const AddChannel = ({ cancelCallback, channelNames }) => {
           },
         };
         try {
-          await http.post(routes.channelsPath(), { data });
+          await axios.post(routes.channelsPath(), { data });
           cancelCallback();
         } catch (error) {
           showToast({ title: t('error'), body: error.message });
