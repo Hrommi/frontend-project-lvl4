@@ -57,6 +57,7 @@
     "react-dom": "^17.0.0",
     "react-i18next": "^11.7.3",
     "react-redux": "^7.2.1",
+    "react-toast-notifications": "^2.4.0",
     "regenerator-runtime": "^0.13.7",
     "rollbar": "^2.19.4",
     "socket.io": "^2.3.0",

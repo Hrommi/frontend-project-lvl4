@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 import routes from '../../routes';
-import { useToast } from '../../components/Toast';
 
 const RemoveChannel = ({ channel, cancelCallback }) => {
   const { t } = useTranslation(['channels', 'form']);
-  const { showToast, hideToast } = useToast();
+  const { addToast, removeToast } = useToasts();
+  const toastId = React.useRef(null);
 
   const confirmButton = React.useRef(null);
   React.useEffect(() => {
@@ -20,12 +21,14 @@ const RemoveChannel = ({ channel, cancelCallback }) => {
     <Formik
       initialValues={{}}
       onSubmit={async () => {
-        hideToast();
+        if (toastId.current) {
+          removeToast(toastId.current);
+        }
         try {
           await axios.delete(routes.channelPath(channel.id));
           cancelCallback();
         } catch (error) {
-          showToast({ title: t('form:error'), body: error.message });
+          toastId.current = addToast(error.message, { appearance: 'error' });
         }
       }}
     >

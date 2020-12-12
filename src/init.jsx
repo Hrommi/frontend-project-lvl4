@@ -1,13 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { ToastProvider } from 'react-toast-notifications';
 import UserProvider from './contexts/UserContext';
 import App from './App';
 import createStore from './redux';
 import { addChannel, removeChannel, renameChannel } from './features/channels';
 import { addMessage } from './features/messages';
+import ToastContainer from './components/Toast';
 import { ModalProvider, createModals } from './components/Modal';
-import { ToastProvider } from './components/Toast';
 
 export default ({ channels, currentChannelId, messages }, socket) => {
   const preloadedState = {
@@ -37,7 +38,11 @@ export default ({ channels, currentChannelId, messages }, socket) => {
   render(
     <Provider store={store}>
       <UserProvider>
-        <ToastProvider>
+        <ToastProvider
+          components={{ ToastContainer }}
+          placement="bottom-right"
+          autoDismiss
+        >
           <ModalProvider modals={modals}>
             <App />
           </ModalProvider>

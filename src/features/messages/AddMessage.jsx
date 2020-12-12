@@ -6,15 +6,16 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 import routes from '../../routes';
 import { useUser } from '../../contexts/UserContext';
-import { useToast } from '../../components/Toast';
 import Input from '../../components/Input';
 
 const AddMessage = ({ currentChannelId }) => {
   const { t } = useTranslation('form');
   const { nickname } = useUser();
-  const { showToast, hideToast } = useToast();
+  const { addToast, removeToast } = useToasts();
+  const toastId = React.useRef(null);
 
   const bodyInput = React.useRef(null);
   const focusBodyInput = () => {
@@ -29,7 +30,9 @@ const AddMessage = ({ currentChannelId }) => {
     <Formik
       initialValues={{ body: '' }}
       onSubmit={async ({ body }, { resetForm }) => {
-        hideToast();
+        if (toastId.current) {
+          removeToast(toastId.current);
+        }
         const trimmedBody = body.trim();
         if (trimmedBody === '') {
           return;
@@ -45,7 +48,7 @@ const AddMessage = ({ currentChannelId }) => {
           resetForm();
           focusBodyInput();
         } catch (error) {
-          showToast({ title: 'Error', body: error.message });
+          toastId.current = addToast(error.message, { appearance: 'error' });
         }
       }}
     >

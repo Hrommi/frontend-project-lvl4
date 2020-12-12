@@ -5,15 +5,16 @@ import { useTranslation } from 'react-i18next';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 import routes from '../../routes';
-import { useToast } from '../../components/Toast';
 import Input from '../../components/Input';
 import getSchema from './schema';
 import selectChannelNames from './selectors';
 
 const AddChannel = ({ cancelCallback, channelNames }) => {
   const { t } = useTranslation('form');
-  const { showToast, hideToast } = useToast();
+  const { addToast, removeToast } = useToasts();
+  const toastId = React.useRef(null);
 
   const nameInput = React.useRef(null);
   React.useEffect(() => {
@@ -25,7 +26,9 @@ const AddChannel = ({ cancelCallback, channelNames }) => {
       initialValues={{ name: '' }}
       validationSchema={getSchema(channelNames)}
       onSubmit={async ({ name }) => {
-        hideToast();
+        if (toastId.current) {
+          removeToast(toastId.current);
+        }
         const data = {
           attributes: {
             name: name.trim(),
@@ -35,7 +38,7 @@ const AddChannel = ({ cancelCallback, channelNames }) => {
           await axios.post(routes.channelsPath(), { data });
           cancelCallback();
         } catch (error) {
-          showToast({ title: t('error'), body: error.message });
+          toastId.current = addToast(error.message, { appearance: 'error' });
         }
       }}
     >
