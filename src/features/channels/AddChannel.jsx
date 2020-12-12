@@ -25,6 +25,7 @@ const AddChannel = ({ cancelCallback, channelNames }) => {
     <Formik
       initialValues={{ name: '' }}
       validationSchema={getSchema(channelNames)}
+      validateOnBlur={false}
       onSubmit={async ({ name }) => {
         if (toastId.current) {
           removeToast(toastId.current);
