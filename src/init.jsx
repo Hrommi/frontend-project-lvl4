@@ -8,7 +8,7 @@ import createStore from './redux';
 import { addChannel, removeChannel, renameChannel } from './features/channels';
 import { addMessage } from './features/messages';
 import ToastContainer from './components/Toast';
-import { ModalProvider, createModals } from './components/Modal';
+import ModalRoot from './ModalRoot';
 
 export default ({ channels, currentChannelId, messages }, socket) => {
   const preloadedState = {
@@ -33,8 +33,6 @@ export default ({ channels, currentChannelId, messages }, socket) => {
     store.dispatch(addMessage({ message: data.attributes }));
   });
 
-  const modals = createModals();
-
   render(
     <Provider store={store}>
       <UserProvider>
@@ -43,9 +41,8 @@ export default ({ channels, currentChannelId, messages }, socket) => {
           placement="bottom-right"
           autoDismiss
         >
-          <ModalProvider modals={modals}>
-            <App />
-          </ModalProvider>
+          <App />
+          <ModalRoot />
         </ToastProvider>
       </UserProvider>
     </Provider>,

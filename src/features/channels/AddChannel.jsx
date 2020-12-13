@@ -7,12 +7,14 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import routes from '../../routes';
+import { closeModal as closeModalConnect } from '../../redux/slices/modal';
+import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import getSchema from './schema';
 import selectChannelNames from './selectors';
 
-const AddChannel = ({ cancelCallback, channelNames }) => {
-  const { t } = useTranslation('form');
+const AddChannel = ({ closeModal, channelNames }) => {
+  const { t } = useTranslation(['channels', 'form']);
   const { addToast, removeToast } = useToasts();
   const toastId = React.useRef(null);
 
@@ -22,56 +24,61 @@ const AddChannel = ({ cancelCallback, channelNames }) => {
   }, []);
 
   return (
-    <Formik
-      initialValues={{ name: '' }}
-      validationSchema={getSchema(channelNames)}
-      validateOnBlur={false}
-      onSubmit={async ({ name }) => {
-        if (toastId.current) {
-          removeToast(toastId.current);
-        }
-        const data = {
-          attributes: {
-            name: name.trim(),
-          },
-        };
-        try {
-          await axios.post(routes.channelsPath(), { data });
-          cancelCallback();
-        } catch (error) {
-          toastId.current = addToast(error.message, { appearance: 'error' });
-        }
-      }}
+    <Modal
+      title={t('add')}
+      onHide={closeModal}
     >
-      {(formik) => (
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
-            <Input
-              name="name"
-              ref={nameInput}
-              readOnly={formik.isSubmitting}
-            />
-          </Form.Group>
-          <div className="d-flex justify-content-end">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={cancelCallback}
-              disabled={formik.isSubmitting}
-            >
-              {t('cancel')}
-            </Button>
-            <Button
-              className="ml-2"
-              type="submit"
-              disabled={formik.isSubmitting}
-            >
-              {t('submit')}
-            </Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+      <Formik
+        initialValues={{ name: '' }}
+        validationSchema={getSchema(channelNames)}
+        validateOnBlur={false}
+        onSubmit={async ({ name }) => {
+          if (toastId.current) {
+            removeToast(toastId.current);
+          }
+          const data = {
+            attributes: {
+              name: name.trim(),
+            },
+          };
+          try {
+            await axios.post(routes.channelsPath(), { data });
+            closeModal();
+          } catch (error) {
+            toastId.current = addToast(error.message, { appearance: 'error' });
+          }
+        }}
+      >
+        {(formik) => (
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Group>
+              <Input
+                name="name"
+                ref={nameInput}
+                readOnly={formik.isSubmitting}
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-end">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => closeModal()}
+                disabled={formik.isSubmitting}
+              >
+                {t('form:cancel')}
+              </Button>
+              <Button
+                className="ml-2"
+                type="submit"
+                disabled={formik.isSubmitting}
+              >
+                {t('form:submit')}
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </Modal>
   );
 };
 
@@ -79,4 +86,8 @@ const mapStateToProps = (state) => ({
   channelNames: selectChannelNames(state),
 });
 
-export default connect(mapStateToProps)(AddChannel);
+const mapDispatchToProps = {
+  closeModal: closeModalConnect,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddChannel);

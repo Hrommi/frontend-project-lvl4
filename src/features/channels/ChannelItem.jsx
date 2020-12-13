@@ -4,9 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { useModal } from '../../components/Modal';
-import RenameChannel from './RenameChannel';
-import RemoveChannel from './RemoveChannel';
+import { RENAME_CHANNEL, REMOVE_CHANNEL } from './modalTypes';
 
 const ChannelButton = ({ channel, setCurrentChannelId, buttonVariant }) => {
   const buttonClasses = cn('nav-link text-left', {
@@ -25,18 +23,13 @@ const ChannelButton = ({ channel, setCurrentChannelId, buttonVariant }) => {
   );
 };
 
-const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
+const ChannelItem = ({
+  channel,
+  isCurrent,
+  setCurrentChannelId,
+  openModal,
+}) => {
   const { t } = useTranslation('channels');
-  const { showModal: showModalRenameChannel, hideModal: hideModalRenameChannel } = useModal({
-    type: 'RENAME_CHANNEL',
-    title: t('rename'),
-    component: RenameChannel,
-  });
-  const { showModal: showModalRemoveChannel, hideModal: hideModalRemoveChannel } = useModal({
-    type: 'REMOVE_CHANNEL',
-    title: t('remove'),
-    component: RemoveChannel,
-  });
 
   const buttonVariant = isCurrent ? 'primary' : 'light';
 
@@ -52,18 +45,12 @@ const ChannelItem = ({ channel, isCurrent, setCurrentChannelId }) => {
           <Dropdown.Toggle split variant={buttonVariant} />
           <Dropdown.Menu alignRight>
             <Dropdown.Item
-              onClick={() => showModalRenameChannel({
-                channel,
-                cancelCallback: hideModalRenameChannel,
-              })}
+              onClick={() => openModal({ type: RENAME_CHANNEL, extra: { channelId: channel.id } })}
             >
               {t('renameAction')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => showModalRemoveChannel({
-                channel,
-                cancelCallback: hideModalRemoveChannel,
-              })}
+              onClick={() => openModal({ type: REMOVE_CHANNEL, extra: { channelId: channel.id } })}
             >
               {t('removeAction')}
             </Dropdown.Item>

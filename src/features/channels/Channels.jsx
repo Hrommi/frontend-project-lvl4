@@ -1,17 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
+import { openModal as openModalConnect } from '../../redux/slices/modal';
+import { ADD_CHANNEL } from './modalTypes';
 import ChannelsList from './ChannelsList';
-import AddChannel from './AddChannel';
-import { useModal } from '../../components/Modal';
 
-const Channels = () => {
+const Channels = ({ openModal }) => {
   const { t } = useTranslation('channels');
-  const { showModal, hideModal } = useModal({
-    type: 'ADD_CHANNEL',
-    title: t('add'),
-    component: AddChannel,
-  });
 
   return (
     <>
@@ -22,7 +18,7 @@ const Channels = () => {
           type="button"
           className="ml-auto"
           variant="light"
-          onClick={() => showModal({ cancelCallback: hideModal })}
+          onClick={() => openModal({ type: ADD_CHANNEL })}
         >
           +
         </Button>
@@ -32,4 +28,8 @@ const Channels = () => {
   );
 };
 
-export default Channels;
+const mapDispatchToProps = {
+  openModal: openModalConnect,
+};
+
+export default connect(null, mapDispatchToProps)(Channels);

@@ -1,9 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { openModal as openModalConnect } from '../../redux/slices/modal';
 import ChannelItem from './ChannelItem';
 import { setCurrentChannelId as setCurrentChannelIdConnect } from './channelsInfoSlice';
 
-const ChannelsList = ({ channels, currentChannelId, setCurrentChannelId }) => {
+const ChannelsList = ({
+  channels,
+  currentChannelId,
+  setCurrentChannelId,
+  openModal,
+}) => {
   if (channels.length === 0) {
     return null;
   }
@@ -16,6 +22,7 @@ const ChannelsList = ({ channels, currentChannelId, setCurrentChannelId }) => {
           channel={channel}
           isCurrent={channel.id === currentChannelId}
           setCurrentChannelId={setCurrentChannelId}
+          openModal={openModal}
         />
       ))}
     </ul>
@@ -29,6 +36,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setCurrentChannelId: setCurrentChannelIdConnect,
+  openModal: openModalConnect,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChannelsList);
