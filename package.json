@@ -31,7 +31,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
     "core-js": "^3.6.5",
